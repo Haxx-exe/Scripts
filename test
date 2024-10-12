@@ -1,0 +1,42 @@
+function ForceAttachment(Name,SetTo)
+    local g = game.Players.LocalPlayer.Character.CharStats.GunInventory
+    g.Gun1:SetAttribute(Name,SetTo)
+    g.Gun2:SetAttribute(Name,SetTo)
+end
+function ModifyAttachmentData(Name,CategoryName,Property,SetTo)
+    game.ReplicatedStorage.Framework.Attachments[CategoryName][Name].Data:SetAttribute(Property,SetTo)
+end
+function SetReloadSpeedMulti(Multi)
+    local f= game.Players.LocalPlayer.Character.CharStats.ReloadBuffs
+    f:ClearAllChildren()
+    local i = Instance.new("NumberValue")
+    i.Parent = f
+    i.Value = Multi
+    i.Name = "SpeedCola"
+end
+cfg = {
+    BarrelToEquip = "Suppressor",
+    SideToEquip = "JTEK Alamo",
+    SightToEquip = "Mini",
+    UnderbarrelToEquip = "Rainbow Laser"
+}   
+ModifyAttachmentData("JTEK Alamo","Side","RPMAddon",9999999)
+ModifyAttachmentData("Suppressor","Barrel","CamRecoilAimVertAddon",-0.5)
+ModifyAttachmentData("Suppressor","Barrel","CamRecoilAimHorzAddon",0)
+ModifyAttachmentData("Suppressor","Barrel","CamRecoilIdleVertAddon",-0.5)
+ModifyAttachmentData("Suppressor","Barrel","CamRecoilIdleHorzAddon",0)
+ModifyAttachmentData("Suppressor","Barrel","CamRecoilCrouchVertAddon",-0.5)
+ModifyAttachmentData("Suppressor","Barrel","CamRecoilCrouchHorzAddon",0)
+ForceAttachment("Side",cfg.SideToEquip)
+ForceAttachment("Underbarrel",cfg.UnderbarrelToEquip)
+ForceAttachment("Sight",cfg.SightToEquip)
+ForceAttachment("Barrel",cfg.BarrelToEquip)
+game.UserInputService.InputBegan:Connect(function(i)
+    if i.KeyCode == Enum.KeyCode.V then
+        ForceAttachment("Side",cfg.SideToEquip)
+        ForceAttachment("Underbarrel",cfg.UnderbarrelToEquip)
+        ForceAttachment("Sight",cfg.SightToEquip)
+        ForceAttachment("Barrel",cfg.BarrelToEquip)
+        SetReloadSpeedMulti(9900)
+    end
+end)
